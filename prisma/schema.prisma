@@ -11,6 +11,21 @@ datasource db {
 }
 
 model Users {
-  id   String @id @default(uuid())
-  nome String
+  id        String   @id @default(uuid())
+  guthubId  Int      @unique
+  nome      String
+  login     String
+  avatarUrl String
+  memories  memory[]
+}
+
+model memory {
+  id        String   @id @default(uuid())
+  usersId   String
+  coverUrl  String
+  content   String
+  isPublic  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user Users @relation(fields: [usersId], references: [id])
 }
